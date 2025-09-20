@@ -1,0 +1,14 @@
+{
+  "resourceName": "contentLocalizerStorage",
+  "policyUUID": "8131d2cb",
+  "bucketName": "contentlocalizer47870c3748124a9984421974da4ebbf",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}

@@ -1,0 +1,66 @@
+.App {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+}
+
+.App-header {
+  background-color: #282c34;
+  padding: 20px;
+  color: white;
+  text-align: center;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+/* Amplify UI Theme Customization */
+[data-amplify-authenticator] {
+  --amplify-colors-brand-primary-10: #007bff;
+  --amplify-colors-brand-primary-20: #0056b3;
+  --amplify-colors-brand-primary-40: #004085;
+  --amplify-colors-brand-primary-60: #003d82;
+  --amplify-colors-brand-primary-80: #002752;
+  --amplify-colors-brand-primary-90: #001d4a;
+  --amplify-colors-brand-primary-100: #001122;
+}
+
+[data-amplify-authenticator] [data-amplify-container] {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+[data-amplify-authenticator] [data-amplify-form] {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+}
+
+[data-amplify-authenticator] [data-amplify-header] {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+[data-amplify-authenticator] [data-amplify-header] h1 {
+  color: #333;
+  font-size: 28px;
+  margin: 0;
+}
+
+[data-amplify-authenticator] [data-amplify-footer] {
+  text-align: center;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+[data-amplify-authenticator] [data-amplify-footer] a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+[data-amplify-authenticator] [data-amplify-footer] a:hover {
+  text-decoration: underline;
+}

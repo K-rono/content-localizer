@@ -1,0 +1,23 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-contentlocalizer-dev-fa55f-authRole",
+      "UnauthRoleArn": "arn:aws:iam::065727386877:role/amplify-contentlocalizer-dev-fa55f-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::065727386877:role/amplify-contentlocalizer-dev-fa55f-authRole",
+      "Region": "ap-southeast-1",
+      "DeploymentBucketName": "amplify-contentlocalizer-dev-fa55f-deployment",
+      "UnauthRoleName": "amplify-contentlocalizer-dev-fa55f-unauthRole",
+      "StackName": "amplify-contentlocalizer-dev-fa55f",
+      "StackId": "arn:aws:cloudformation:ap-southeast-1:065727386877:stack/amplify-contentlocalizer-dev-fa55f/3eb58ae0-95f0-11f0-a570-029e488b6fb5",
+      "AmplifyAppId": "d287qm1udibrte"
+    },
+    "categories": {
+      "auth": {
+        "contentlocalizer2f1cf384": {}
+      },
+      "function": {
+        "contentLocalizerFunction": {}
+      }
+    }
+  }
+}
