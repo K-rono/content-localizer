@@ -19,11 +19,11 @@
       "function": {
         "uploadHandler": {
           "deploymentBucketName": "amplify-contentlocalizer-dev-fa55f-deployment",
-          "s3Key": "amplify-builds/uploadHandler-354a6962583243666369-build.zip"
+          "s3Key": "amplify-builds/uploadHandler-626b673667437a794e78-build.zip"
         },
         "jobProcessor": {
           "deploymentBucketName": "amplify-contentlocalizer-dev-fa55f-deployment",
-          "s3Key": "amplify-builds/jobProcessor-4b323034613644454a6b-build.zip"
+          "s3Key": "amplify-builds/jobProcessor-70437164576b66723257-build.zip"
         },
         "resultsFetcher": {
           "deploymentBucketName": "amplify-contentlocalizer-dev-fa55f-deployment",

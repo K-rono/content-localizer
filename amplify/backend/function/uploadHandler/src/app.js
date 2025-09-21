@@ -129,6 +129,60 @@ app.post('/upload', async function(req, res) {
   }
 });
 
+/************************************
+* POST /update-context/{jobId} - Update job with context data *
+************************************/
+
+app.post('/update-context/:jobId', async function(req, res) {
+  try {
+    const { jobId } = req.params;
+    const { contextData } = req.body;
+
+    if (!jobId) {
+      return res.status(400).json({
+        success: false,
+        error: 'Job ID is required'
+      });
+    }
+
+    if (!contextData) {
+      return res.status(400).json({
+        success: false,
+        error: 'Context data is required'
+      });
+    }
+
+    // Update the job record with context data
+    const updateCommand = new UpdateCommand({
+      TableName: tableName,
+      Key: {
+        PK: `JOB#${jobId}`,
+        SK: 'METADATA'
+      },
+      UpdateExpression: 'SET contextData = :contextData, updatedAt = :updatedAt',
+      ExpressionAttributeValues: {
+        ':contextData': contextData,
+        ':updatedAt': new Date().toISOString()
+      }
+    });
+
+    await ddbDocClient.send(updateCommand);
+
+    res.json({
+      success: true,
+      jobId: jobId,
+      message: 'Context data updated successfully'
+    });
+
+  } catch (error) {
+    console.error('Error updating job context:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to update job context: ' + error.message
+    });
+  }
+});
+
 // Helper function to get content type based on file type
 function getContentType(fileType) {
   switch (fileType) {

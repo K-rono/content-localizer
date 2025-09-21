@@ -14,6 +14,7 @@ import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import ErrorBoundary from './components/ErrorBoundary';
 import Notification from './components/Notification';
+import { updateJobWithContext } from './utils/api';
 
 Amplify.configure(awsconfig);
 
@@ -38,19 +39,28 @@ function App() {
     setUploadedFile(file);
     setUploadResult(result);
     setCurrentStep('context');
-    showNotification('success', 'File uploaded successfully!');
+    // Don't show success notification yet - wait for context submission
   };
 
   const handleUploadError = (error) => {
     showNotification('error', error);
   };
 
-  const handleContextSubmit = (context) => {
+  const handleContextSubmit = async (context) => {
     setContextData(context);
     setCurrentStep('processing');
-    // Job ID will be set from upload result
-    if (uploadResult?.jobId) {
-      setJobId(uploadResult.jobId);
+    
+    // Now upload the file with context data
+    if (uploadedFile && uploadResult?.jobId) {
+      try {
+        // Update the job with context data
+        await updateJobWithContext(uploadResult.jobId, context);
+        setJobId(uploadResult.jobId);
+        showNotification('success', 'File uploaded and context saved!');
+      } catch (error) {
+        console.error('Error updating job with context:', error);
+        showNotification('error', 'Failed to save context data');
+      }
     }
   };
 

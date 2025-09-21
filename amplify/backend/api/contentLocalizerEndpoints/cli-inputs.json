@@ -28,6 +28,13 @@
       "permissions": {
         "setting": "open"
       }
+    },
+    "/update-context/{jobId}": {
+      "name": "/update-context/{jobId}",
+      "lambdaFunction": "uploadHandler",
+      "permissions": {
+        "setting": "open"
+      }
     }
   }
 }

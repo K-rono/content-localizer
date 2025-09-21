@@ -283,6 +283,15 @@
                   ]
                 }
               ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "bedrock:InvokeModel"
+              ],
+              "Resource": [
+                "arn:aws:bedrock:us-east-1::foundation-model/amazon.nova-premier-v1:0"
+              ]
             }
           ]
         }

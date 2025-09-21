@@ -159,6 +159,37 @@ export const getJobResults = async (jobId) => {
   }
 };
 
+// Update job with context data
+export const updateJobWithContext = async (jobId, contextData) => {
+  try {
+    const response = await post({
+      apiName: API_NAME,
+      path: `/update-context/${jobId}`,
+      options: {
+        body: {
+          contextData: contextData
+        }
+      }
+    });
+
+    // For Amplify v6, we need to await the response and parse the body
+    const res = await response.response;
+    const data = await res.body.json();
+
+    if (!data.success) {
+      throw new Error(data.error || 'Failed to update job context');
+    }
+
+    return {
+      success: true,
+      jobId: data.jobId
+    };
+
+  } catch (error) {
+    throw new Error(handleApiError(error, 'Job context update'));
+  }
+};
+
 // Get user's job history
 export const getJobHistory = async () => {
   try {
