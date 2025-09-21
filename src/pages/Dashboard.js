@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getJobHistory } from '../utils/api';
+import { getJobHistory, fetchJobResults } from '../utils/api';
 
 const Dashboard = () => {
   const [jobs, setJobs] = useState([]);
@@ -64,6 +64,32 @@ const Dashboard = () => {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
           </svg>
         );
+    }
+  };
+
+  const handleDownload = async (job) => {
+    try {
+      // Fetch the job results to get download URLs
+      const result = await fetchJobResults(job.jobId);
+      
+      if (!result.localizedFileUrl) {
+        alert('Download URL not available for this job');
+        return;
+      }
+      
+      // Create a temporary anchor element to trigger download
+      const link = document.createElement('a');
+      link.href = result.localizedFileUrl;
+      link.download = job.fileName?.replace(/(\.[^.]+)$/, '_localized$1') || 'localized_file.txt';
+      link.target = '_blank';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      console.log(`Downloading localized file for job: ${job.jobId}`);
+    } catch (error) {
+      console.error('Error downloading file:', error);
+      alert('Error downloading file. Please try again.');
     }
   };
 
@@ -182,7 +208,10 @@ const Dashboard = () => {
                       {job.status}
                     </span>
                     {job.status?.toLowerCase() === 'completed' && (
-                      <button className="text-primary-600 hover:text-primary-700 text-sm font-medium">
+                      <button 
+                        onClick={() => handleDownload(job)}
+                        className="text-primary-600 hover:text-primary-700 text-sm font-medium"
+                      >
                         Download
                       </button>
                     )}

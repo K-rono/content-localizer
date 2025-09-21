@@ -17,9 +17,38 @@ const ResultsSection = ({ results, onReset }) => {
   };
 
   const handleDownload = (fileType) => {
-    // Here you would trigger the download
-    console.log(`Downloading ${fileType} file`);
-    // In a real implementation, you would use the file URL to trigger download
+    try {
+      let downloadUrl;
+      let fileName;
+      
+      if (fileType === 'original') {
+        downloadUrl = results.originalFileUrl;
+        fileName = results.fileName || 'original_file.txt';
+      } else if (fileType === 'localized') {
+        downloadUrl = results.localizedFileUrl;
+        fileName = results.fileName?.replace(/(\.[^.]+)$/, '_localized$1') || 'localized_file.txt';
+      }
+      
+      if (!downloadUrl) {
+        console.error(`No download URL available for ${fileType} file`);
+        alert(`Download URL not available for ${fileType} file`);
+        return;
+      }
+      
+      // Create a temporary anchor element to trigger download
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      link.download = fileName;
+      link.target = '_blank';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      console.log(`Downloading ${fileType} file: ${fileName}`);
+    } catch (error) {
+      console.error(`Error downloading ${fileType} file:`, error);
+      alert(`Error downloading ${fileType} file. Please try again.`);
+    }
   };
 
   if (!results) {
@@ -222,35 +251,6 @@ const ResultsSection = ({ results, onReset }) => {
         </div>
       )}
 
-      {/* Quality Feedback */}
-      <div className="bg-white rounded-lg shadow-lg p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Quality Feedback</h3>
-        <div className="space-y-4">
-          <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-              <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-            <div>
-              <p className="font-medium text-gray-900">Translation Quality: Excellent</p>
-              <p className="text-sm text-gray-600">The localized content maintains the original meaning and tone.</p>
-            </div>
-          </div>
-          
-          <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-              <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-            <div>
-              <p className="font-medium text-gray-900">Cultural Adaptation: Good</p>
-              <p className="text-sm text-gray-600">Content has been adapted for the target culture and language.</p>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };
