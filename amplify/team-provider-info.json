@@ -23,7 +23,7 @@
         },
         "jobProcessor": {
           "deploymentBucketName": "amplify-contentlocalizer-dev-fa55f-deployment",
-          "s3Key": "amplify-builds/jobProcessor-31766334493974746e6b-build.zip"
+          "s3Key": "amplify-builds/jobProcessor-2f6e78424b654335434d-build.zip"
         },
         "resultsFetcher": {
           "deploymentBucketName": "amplify-contentlocalizer-dev-fa55f-deployment",

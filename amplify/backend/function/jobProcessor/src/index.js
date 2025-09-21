@@ -347,6 +347,10 @@ async function generateLocalizedContent(originalContent, targetLanguage, content
 // Create advanced prompt with Malaysian cultural context
 function createAdvancedPrompt(originalContent, targetLanguage, contentType, tone, specialNotes, fileType) {
   const languageMap = {
+    'english': 'English',
+    'malay': 'Bahasa Melayu',
+    'mandarin': 'Simplified Chinese',
+    'tamil': 'Tamil',
     'English': 'English',
     'Malay': 'Bahasa Melayu',
     'Mandarin': 'Simplified Chinese',
@@ -430,12 +434,40 @@ Generate the localized content now:`;
 // Get cultural context based on language
 function getCulturalContext(language) {
   const contexts = {
+    'malay': `
+- Primary audience: Malay-Muslim community (60% of population)
+- Key values: Islamic principles, family, community, respect for elders
+- Sensitivities: Halal requirements, modest imagery, avoid dogs/pigs
+- Preferred tone: Respectful, warm, community-focused
+- Important phrases: "InsyaAllah", "Alhamdulillah", "Bismillah"
+    `,
     'Malay': `
 - Primary audience: Malay-Muslim community (60% of population)
 - Key values: Islamic principles, family, community, respect for elders
 - Sensitivities: Halal requirements, modest imagery, avoid dogs/pigs
 - Preferred tone: Respectful, warm, community-focused
 - Important phrases: "InsyaAllah", "Alhamdulillah", "Bismillah"
+    `,
+    'mandarin': `
+- Primary audience: Malaysian Chinese community (23% of population)
+- Key values: Prosperity, family harmony, education, hard work
+- Sensitivities: Number symbolism (avoid 4, prefer 8), color meanings
+- Preferred tone: Professional, success-oriented, family-focused
+- Important elements: Lunar calendar events, prosperity symbols
+    `,
+    'english': `
+- Primary audience: Urban, multicultural Malaysians
+- Key values: Modern, progressive, inclusive, Malaysian pride
+- Sensitivities: Religious and racial harmony, avoid stereotypes
+- Preferred tone: Professional yet friendly, inclusive
+- Important elements: Malaysian identity, local pride, unity
+    `,
+    'tamil': `
+- Primary audience: Malaysian Indian community (7% of population)
+- Key values: Family, tradition, education, cultural heritage
+- Sensitivities: Religious diversity (Hindu, Christian, Sikh), dietary preferences
+- Preferred tone: Warm, respectful, tradition-aware
+- Important elements: Festival celebrations, family bonds
     `,
     'Mandarin': `
 - Primary audience: Malaysian Chinese community (23% of population)
@@ -466,6 +498,30 @@ function getCulturalContext(language) {
 // Get language-specific nuances
 function getLanguageNuances(language) {
   const nuances = {
+    'malay': `
+- Use "Anda" for formal, "awak" for informal
+- Include "lah" particle for friendliness
+- Common expressions: "Jom", "Best gila", "Memang power"
+- Avoid direct translations from English
+    `,
+    'mandarin': `
+- Use simplified Chinese characters
+- Include Malaysian Chinese expressions: "好料" (ho liao), "够力" (gao lat)
+- Mix with local Hokkien/Cantonese terms when appropriate
+- Use red color text for important points
+    `,
+    'english': `
+- Malaysian English style: "Can or not?", "Where got?"
+- Include local terms: "mamak", "kopitiam", "pasar malam"
+- Use "lah", "lor", "mah" particles naturally
+- Be casual but professional
+    `,
+    'tamil': `
+- Use formal Tamil with local Malaysian Tamil influences
+- Include respectful terms: "Anna", "Akka"
+- Reference local Tamil culture and traditions
+- Maintain traditional values while being modern
+    `,
     'Malay': `
 - Use "Anda" for formal, "awak" for informal
 - Include "lah" particle for friendliness
