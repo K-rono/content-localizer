@@ -75,7 +75,10 @@ app.get('/results/:jobId', async function(req, res) {
       fileSize: job.fileSize,
       createdAt: job.createdAt,
       updatedAt: job.updatedAt,
-      userId: job.userId
+      userId: job.userId,
+      contextData: job.contextData || {},
+      originalContent: job.originalContent || null,
+      localizedContent: job.localizedContent || null
     };
 
     // Generate presigned URLs for file downloads

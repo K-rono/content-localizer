@@ -590,8 +590,9 @@ async function createLocalizedFile(originalPath, fileName, jobId, localizedConte
   let contentType;
   
   if (fileType === 'text') {
-    contentToStore = localizedContent.localizedText || localizedContent;
-    contentType = 'text/plain';
+    // For text files, store the full JSON structure
+    contentToStore = JSON.stringify(localizedContent, null, 2);
+    contentType = 'application/json';
   } else {
     // For images and videos, store metadata as JSON
     contentToStore = JSON.stringify(localizedContent, null, 2);
