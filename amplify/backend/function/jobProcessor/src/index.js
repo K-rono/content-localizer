@@ -496,20 +496,16 @@ function getLanguageNuances(language) {
 // Invoke Bedrock Nova Premier model
 async function invokeBedrockModel(prompt) {
   const params = {
-    modelId: 'amazon.nova-premier-v1:0',
+    modelId: 'amazon.titan-text-express-v1',
     contentType: 'application/json',
     accept: 'application/json',
     body: JSON.stringify({
-      messages: [
-        {
-          role: 'user',
-          content: prompt
-        }
-      ],
-      inferenceConfig: {
-        maxTokens: 4096,
+      inputText: prompt,
+      textGenerationConfig: {
+        maxTokenCount: 4096,
         temperature: 0.7,
-        topP: 0.9
+        topP: 0.9,
+        stopSequences: []
       }
     })
   };
@@ -523,7 +519,7 @@ async function invokeBedrockModel(prompt) {
     const responseBody = JSON.parse(new TextDecoder().decode(response.body));
     console.log('Bedrock response body:', responseBody);
     
-    const content = responseBody.content[0].text;
+    const content = responseBody.results[0].outputText;
     console.log('Extracted content:', content);
     
     try {

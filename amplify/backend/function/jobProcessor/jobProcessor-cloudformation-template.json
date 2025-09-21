@@ -290,7 +290,7 @@
                 "bedrock:InvokeModel"
               ],
               "Resource": [
-                "arn:aws:bedrock:us-east-1::foundation-model/amazon.nova-premier-v1:0"
+                "arn:aws:bedrock:us-east-1::foundation-model/amazon.titan-text-express-v1"
               ]
             }
           ]
