@@ -355,8 +355,12 @@ function createAdvancedPrompt(originalContent, targetLanguage, contentType, tone
 
   return `You are an expert Malaysian marketing content localizer with deep understanding of Malaysia's multicultural society. Your task is to adapt marketing content for the Malaysian market.
 
+<primary_requirement>
+TARGET LANGUAGE: ${languageMap[targetLanguage] || 'English'}
+This is the MOST IMPORTANT requirement. The content MUST be in ${languageMap[targetLanguage] || 'English'} and follow the linguistic patterns, cultural norms, and communication style of this language.
+</primary_requirement>
+
 <context>
-- Target Language: ${languageMap[targetLanguage] || 'English'}
 - Content Type: ${contentType}
 - Tone: ${tone}
 - File Type: ${fileType}
@@ -403,14 +407,15 @@ ${typeof originalContent === 'string' ? originalContent : JSON.stringify(origina
 </original_content>
 
 <task>
-Create localized content in ${languageMap[targetLanguage] || 'English'} that:
-1. Adapts the original message for Malaysian audience
-2. Incorporates cultural elements naturally
-3. Uses appropriate format and tone
-4. Includes relevant hashtags
-5. Ensures cultural sensitivity and inclusivity
-6. Adds call-to-action suitable for Malaysian market
-7. ${specialNotes ? 'PRIORITY: Follows the user\'s special instructions exactly while maintaining cultural appropriateness' : 'Uses standard localization practices'}
+Create localized content that:
+1. **LANGUAGE PRIORITY**: Must be written in ${languageMap[targetLanguage] || 'English'} - this is the absolute requirement
+2. Adapts the original message for Malaysian audience
+3. Incorporates cultural elements naturally
+4. Uses appropriate format and tone for the target language
+5. Includes relevant hashtags
+6. Ensures cultural sensitivity and inclusivity
+7. Adds call-to-action suitable for Malaysian market
+8. ${specialNotes ? 'PRIORITY: Follows the user\'s special instructions exactly while maintaining cultural appropriateness' : 'Uses standard localization practices'}
 
 IMPORTANT: 
 - For Malay content: Use formal Malay, include Islamic greetings when appropriate
@@ -428,7 +433,10 @@ Output Format (MUST be valid JSON):
 
 IMPORTANT: Return ONLY valid JSON. Do not use XML tags or any other format.
 
-${specialNotes ? `REMINDER: Make sure to incorporate the user's special instructions: "${specialNotes}"` : ''}
+FINAL REMINDER: 
+- The content MUST be in ${languageMap[targetLanguage] || 'English'} - this is non-negotiable
+- Use the appropriate linguistic patterns and cultural expressions for this language
+${specialNotes ? `- Also incorporate the user's special instructions: "${specialNotes}"` : ''}
 </task>
 
 Generate the localized content now:`;
