@@ -12,7 +12,7 @@ const Login = ({ onSignIn }) => {
   return (
     <div className="login-container">
       <div className="login-header">
-        <h1>Smart AI Content Localizer</h1>
+        <h1>Lokalize</h1>
         <p>Translate and localize your content with AI-powered tools</p>
       </div>
       
@@ -32,7 +32,7 @@ const Login = ({ onSignIn }) => {
             return (
               <div className="auth-footer">
                 <p>
-                  New to Content Localizer?{' '}
+                  New to Lokalize?{' '}
                   <a href="#signup" style={{ color: '#007bff' }}>
                     Create an account
                   </a>
