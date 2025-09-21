@@ -220,10 +220,8 @@ export const getJobHistory = async () => {
 
 // Utility function to determine file type
 const getFileType = (mimeType) => {
-  if (mimeType.startsWith('text/')) return 'text';
-  if (mimeType.startsWith('image/')) return 'image';
-  if (mimeType.startsWith('video/')) return 'video';
-  return 'text'; // default fallback
+  // Only support text files
+  return 'text';
 };
 
 // Poll job status until completion

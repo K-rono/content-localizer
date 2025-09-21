@@ -30,22 +30,16 @@ const UploadSection = ({ onFileUpload, onError, contextData }) => {
   };
 
   const handleFile = (selectedFile) => {
-    // Validate file type
-    const allowedTypes = ['text/plain', 'image/jpeg', 'image/png', 'image/gif', 'video/mp4', 'video/avi', 'video/mov'];
+    // Validate file type - only text files
+    const allowedTypes = ['text/plain'];
     if (!allowedTypes.includes(selectedFile.type)) {
-      alert('Please upload a text, image, or video file.');
+      alert('Please upload a text file (.txt) only.');
       return;
     }
 
     // Validate file size
     const maxSizes = {
       'text/plain': 1 * 1024 * 1024, // 1MB
-      'image/jpeg': 10 * 1024 * 1024, // 10MB
-      'image/png': 10 * 1024 * 1024, // 10MB
-      'image/gif': 10 * 1024 * 1024, // 10MB
-      'video/mp4': 100 * 1024 * 1024, // 100MB
-      'video/avi': 100 * 1024 * 1024, // 100MB
-      'video/mov': 100 * 1024 * 1024, // 100MB
     };
 
     if (selectedFile.size > maxSizes[selectedFile.type]) {
@@ -62,8 +56,7 @@ const UploadSection = ({ onFileUpload, onError, contextData }) => {
     const reader = new FileReader();
     reader.onload = (e) => {
       setPreview({
-        type: file.type.startsWith('image/') ? 'image' : 
-              file.type.startsWith('video/') ? 'video' : 'text',
+        type: 'text',
         url: e.target.result,
         name: file.name,
         size: file.size
@@ -153,8 +146,6 @@ const UploadSection = ({ onFileUpload, onError, contextData }) => {
             <div className="text-sm text-gray-500">
               <p>Supported formats:</p>
               <p>Text: .txt (max 1MB)</p>
-              <p>Images: .jpg, .png, .gif (max 10MB)</p>
-              <p>Videos: .mp4, .avi, .mov (max 100MB)</p>
             </div>
           </div>
           <input
@@ -162,7 +153,7 @@ const UploadSection = ({ onFileUpload, onError, contextData }) => {
             type="file"
             className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
             onChange={handleFileInput}
-            accept=".txt,.jpg,.jpeg,.png,.gif,.mp4,.avi,.mov"
+            accept=".txt"
           />
         </div>
       ) : (

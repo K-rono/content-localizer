@@ -67,6 +67,8 @@ app.get('/results/:jobId', async function(req, res) {
     }
 
     const job = data.Item;
+    console.log('Job data from DynamoDB:', JSON.stringify(job, null, 2));
+    
     const result = {
       jobId: job.jobId,
       status: job.status,
@@ -78,28 +80,40 @@ app.get('/results/:jobId', async function(req, res) {
       userId: job.userId,
       contextData: job.contextData || {},
       originalContent: job.originalContent || null,
-      localizedContent: job.localizedContent || null
+      localizedContent: job.localizedContent || null,
+      filePath: job.filePath,
+      resultPath: job.resultPath
     };
 
     // Generate presigned URLs for file downloads
+    console.log('Generating URLs - filePath:', job.filePath, 'resultPath:', job.resultPath, 'status:', job.status);
+    
     if (job.filePath) {
       try {
+        console.log('Generating original file URL for:', job.filePath);
         const originalUrl = await generatePresignedUrl(job.filePath);
         result.originalFileUrl = originalUrl;
+        console.log('Original URL generated successfully');
       } catch (error) {
         console.error('Error generating original file URL:', error);
         result.originalFileUrl = null;
       }
+    } else {
+      console.log('No filePath found in job record');
     }
 
-    if (job.resultPath && job.status === 'Completed') {
+    if (job.resultPath && job.status?.toLowerCase() === 'completed') {
       try {
+        console.log('Generating localized file URL for:', job.resultPath);
         const localizedUrl = await generatePresignedUrl(job.resultPath);
         result.localizedFileUrl = localizedUrl;
+        console.log('Localized URL generated successfully');
       } catch (error) {
         console.error('Error generating localized file URL:', error);
         result.localizedFileUrl = null;
       }
+    } else {
+      console.log('No localized URL generated - resultPath:', job.resultPath, 'status:', job.status);
     }
 
     // Include error message if job failed

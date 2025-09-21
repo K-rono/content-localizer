@@ -262,18 +262,11 @@ async function processJob(newImage) {
   try {
     let resultPath;
     
-    switch (fileType) {
-      case 'text':
-        resultPath = await processTextFile(filePath, fileName, jobId);
-        break;
-      case 'image':
-        resultPath = await processImageFile(filePath, fileName, jobId);
-        break;
-      case 'video':
-        resultPath = await processVideoFile(filePath, fileName, jobId);
-        break;
-      default:
-        throw new Error(`Unsupported file type: ${fileType}`);
+    // Process text files only
+    if (fileType === 'text') {
+      resultPath = await processTextFile(filePath, fileName, jobId);
+    } else {
+      throw new Error(`Unsupported file type: ${fileType}. Only text files are supported.`);
     }
     
     // Update job with result path and mark as completed
@@ -408,8 +401,9 @@ Create localized content in ${languageMap[targetLanguage] || 'English'} that:
 1. Adapts the original message for Malaysian audience
 2. Incorporates cultural elements naturally
 3. Uses appropriate format and tone
-4. Ensures cultural sensitivity and inclusivity
-5. Adds call-to-action suitable for Malaysian market
+4. Includes relevant hashtags
+5. Ensures cultural sensitivity and inclusivity
+6. Adds call-to-action suitable for Malaysian market
 
 IMPORTANT: 
 - For Malay content: Use formal Malay, include Islamic greetings when appropriate
@@ -679,63 +673,6 @@ async function createLocalizedFile(originalPath, fileName, jobId, localizedConte
   }
 }
 
-async function processImageFile(filePath, fileName, jobId) {
-  console.log(`Processing image file: ${filePath}`);
-  
-  // For MVP: Just copy the file to localized folder
-  const getObjectCommand = new GetObjectCommand({
-    Bucket: bucketName,
-    Key: filePath
-  });
-  
-  const response = await s3Client.send(getObjectCommand);
-  const imageBuffer = await streamToBuffer(response.Body);
-  
-  // Create localized file path
-  const localizedFileName = fileName.replace(/(\.[^.]+)$/, '_localized$1');
-  const resultPath = `jobs/${jobId}/localized/${localizedFileName}`;
-  
-  // Upload localized content to S3
-  const putObjectCommand = new PutObjectCommand({
-    Bucket: bucketName,
-    Key: resultPath,
-    Body: imageBuffer,
-    ContentType: response.ContentType || 'image/jpeg'
-  });
-  
-  await s3Client.send(putObjectCommand);
-  
-  return resultPath;
-}
-
-async function processVideoFile(filePath, fileName, jobId) {
-  console.log(`Processing video file: ${filePath}`);
-  
-  // For MVP: Just copy the file to localized folder
-  const getObjectCommand = new GetObjectCommand({
-    Bucket: bucketName,
-    Key: filePath
-  });
-  
-  const response = await s3Client.send(getObjectCommand);
-  const videoBuffer = await streamToBuffer(response.Body);
-  
-  // Create localized file path
-  const localizedFileName = fileName.replace(/(\.[^.]+)$/, '_localized$1');
-  const resultPath = `jobs/${jobId}/localized/${localizedFileName}`;
-  
-  // Upload localized content to S3
-  const putObjectCommand = new PutObjectCommand({
-    Bucket: bucketName,
-    Key: resultPath,
-    Body: videoBuffer,
-    ContentType: response.ContentType || 'video/mp4'
-  });
-  
-  await s3Client.send(putObjectCommand);
-  
-  return resultPath;
-}
 
 async function updateJobStatus(jobId, status) {
   const updateCommand = new UpdateCommand({
