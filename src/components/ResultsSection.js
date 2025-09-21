@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 
 const ResultsSection = ({ results, onReset }) => {
-  const [editableContent, setEditableContent] = useState(results?.localizedContent || '');
+  // Extract the localized text from the structured content
+  const localizedText = results?.localizedContent?.localizedText || results?.localizedContent || '';
+  const [editableContent, setEditableContent] = useState(localizedText);
   const [isEditing, setIsEditing] = useState(false);
 
   const handleContentEdit = (newContent) => {
@@ -62,11 +64,11 @@ const ResultsSection = ({ results, onReset }) => {
           </div>
           <div className="bg-gray-50 rounded-lg p-3">
             <span className="font-medium text-gray-700">Language:</span>
-            <p className="text-gray-600">{results.language}</p>
+            <p className="text-gray-600">{results.contextData?.targetLanguage || 'Unknown'}</p>
           </div>
           <div className="bg-gray-50 rounded-lg p-3">
-            <span className="font-medium text-gray-700">Processing Time:</span>
-            <p className="text-gray-600">{results.processingTime}</p>
+            <span className="font-medium text-gray-700">Status:</span>
+            <p className="text-gray-600">{results.status}</p>
           </div>
         </div>
       </div>
@@ -148,7 +150,7 @@ const ResultsSection = ({ results, onReset }) => {
               </div>
               <div className="flex-1">
                 <h4 className="font-medium text-gray-900">Original File</h4>
-                <p className="text-sm text-gray-600">{results.originalFile.name}</p>
+                <p className="text-sm text-gray-600">{results.fileName}</p>
               </div>
               <button
                 onClick={() => handleDownload('original')}
@@ -168,7 +170,7 @@ const ResultsSection = ({ results, onReset }) => {
               </div>
               <div className="flex-1">
                 <h4 className="font-medium text-gray-900">Localized File</h4>
-                <p className="text-sm text-gray-600">{results.localizedFile.name}</p>
+                <p className="text-sm text-gray-600">{results.fileName?.replace(/(\.[^.]+)$/, '_localized$1')}</p>
               </div>
               <button
                 onClick={() => handleDownload('localized')}
@@ -180,6 +182,45 @@ const ResultsSection = ({ results, onReset }) => {
           </div>
         </div>
       </div>
+
+      {/* Cultural Context & Additional Info */}
+      {results.localizedContent && typeof results.localizedContent === 'object' && (
+        <div className="bg-white rounded-lg shadow-lg p-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Cultural Context & Details</h3>
+          <div className="space-y-4">
+            {results.localizedContent.culturalNote && (
+              <div>
+                <h4 className="font-medium text-gray-900 mb-2">Cultural Note:</h4>
+                <p className="text-sm text-gray-600 bg-gray-50 rounded-lg p-3">
+                  {results.localizedContent.culturalNote}
+                </p>
+              </div>
+            )}
+            
+            {results.localizedContent.hashtags && results.localizedContent.hashtags.length > 0 && (
+              <div>
+                <h4 className="font-medium text-gray-900 mb-2">Hashtags:</h4>
+                <div className="flex flex-wrap gap-2">
+                  {results.localizedContent.hashtags.map((hashtag, index) => (
+                    <span key={index} className="px-2 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">
+                      {hashtag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+            
+            {results.localizedContent.callToAction && (
+              <div>
+                <h4 className="font-medium text-gray-900 mb-2">Call to Action:</h4>
+                <p className="text-sm text-gray-600 bg-green-50 rounded-lg p-3">
+                  {results.localizedContent.callToAction}
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Quality Feedback */}
       <div className="bg-white rounded-lg shadow-lg p-6">
