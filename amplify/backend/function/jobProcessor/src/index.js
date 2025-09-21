@@ -326,11 +326,20 @@ async function generateLocalizedContent(originalContent, targetLanguage, content
   const prompt = createAdvancedPrompt(originalContent, targetLanguage, contentType, tone, specialNotes, fileType);
   
   try {
+    console.log('Attempting to invoke Bedrock model...');
     const response = await invokeBedrockModel(prompt);
+    console.log('Bedrock response received:', response);
     return response;
   } catch (error) {
     console.error('Error generating localized content:', error);
+    console.error('Error details:', {
+      name: error.name,
+      message: error.message,
+      code: error.code,
+      statusCode: error.statusCode
+    });
     // Fallback to simple localization
+    console.log('Using fallback content due to Bedrock error');
     return generateFallbackContent(originalContent, targetLanguage, fileType);
   }
 }
@@ -506,11 +515,16 @@ async function invokeBedrockModel(prompt) {
   };
 
   try {
+    console.log('Invoking Bedrock with params:', JSON.stringify(params, null, 2));
     const command = new InvokeModelCommand(params);
     const response = await bedrockClient.send(command);
     
+    console.log('Bedrock raw response:', response);
     const responseBody = JSON.parse(new TextDecoder().decode(response.body));
+    console.log('Bedrock response body:', responseBody);
+    
     const content = responseBody.content[0].text;
+    console.log('Extracted content:', content);
     
     try {
       return JSON.parse(content);
