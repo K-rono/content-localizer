@@ -9,10 +9,14 @@ frontend:
   phases:
     preBuild:
       commands:
+        - echo "Installing dependencies..."
         - npm ci
+        - echo "Dependencies installed successfully"
     build:
       commands:
+        - echo "Building React application..."
         - npm run build
+        - echo "Build completed successfully"
   artifacts:
     baseDirectory: build
     files:
