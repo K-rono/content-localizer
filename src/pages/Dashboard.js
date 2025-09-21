@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getJobHistory, fetchJobResults } from '../utils/api';
+import { getJobHistory, getJobResults } from '../utils/api';
 
 const Dashboard = () => {
   const [jobs, setJobs] = useState([]);
@@ -70,7 +70,7 @@ const Dashboard = () => {
   const handleDownload = async (job) => {
     try {
       // Fetch the job results to get download URLs
-      const result = await fetchJobResults(job.jobId);
+      const result = await getJobResults(job.jobId);
       
       if (!result.localizedFileUrl) {
         alert('Download URL not available for this job');
