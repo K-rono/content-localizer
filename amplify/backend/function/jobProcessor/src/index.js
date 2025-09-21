@@ -360,8 +360,14 @@ function createAdvancedPrompt(originalContent, targetLanguage, contentType, tone
 - Content Type: ${contentType}
 - Tone: ${tone}
 - File Type: ${fileType}
-- Special Notes: ${specialNotes}
 </context>
+
+<special_instructions>
+${specialNotes ? `IMPORTANT: The user has provided specific instructions that MUST be followed:
+"${specialNotes}"
+
+These instructions take priority and should be incorporated into the localized content while maintaining cultural appropriateness.` : 'No special instructions provided.'}
+</special_instructions>
 
 <cultural_sensitivity_guidelines>
 ${culturalContext}
@@ -404,6 +410,7 @@ Create localized content in ${languageMap[targetLanguage] || 'English'} that:
 4. Includes relevant hashtags
 5. Ensures cultural sensitivity and inclusivity
 6. Adds call-to-action suitable for Malaysian market
+7. ${specialNotes ? 'PRIORITY: Follows the user\'s special instructions exactly while maintaining cultural appropriateness' : 'Uses standard localization practices'}
 
 IMPORTANT: 
 - For Malay content: Use formal Malay, include Islamic greetings when appropriate
@@ -420,6 +427,8 @@ Output Format (MUST be valid JSON):
 }
 
 IMPORTANT: Return ONLY valid JSON. Do not use XML tags or any other format.
+
+${specialNotes ? `REMINDER: Make sure to incorporate the user's special instructions: "${specialNotes}"` : ''}
 </task>
 
 Generate the localized content now:`;
