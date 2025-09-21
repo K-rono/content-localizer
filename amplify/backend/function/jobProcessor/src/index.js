@@ -413,13 +413,15 @@ IMPORTANT:
 - For English content: Use Malaysian English style, be multicultural
 - For Tamil content: Respect traditional values, include family elements
 
-Output Format:
+Output Format (MUST be valid JSON):
 {
   "localizedText": "The localized marketing message",
-  "culturalNote": "Brief explanation of cultural adaptations made",
+  "culturalNote": "Brief explanation of cultural adaptations made", 
   "hashtags": ["relevant", "hashtags"],
   "callToAction": "Clear CTA for Malaysian market"
 }
+
+IMPORTANT: Return ONLY valid JSON. Do not use XML tags or any other format.
 </task>
 
 Generate the localized content now:`;
@@ -525,7 +527,24 @@ async function invokeBedrockModel(prompt) {
     try {
       return JSON.parse(content);
     } catch (jsonError) {
-      console.warn('Bedrock did not return valid JSON, returning raw text.', content);
+      console.warn('Bedrock did not return valid JSON, attempting to parse XML-like format:', content);
+      
+      // Try to extract content from XML-like format
+      const localizedTextMatch = content.match(/<localizedText>(.*?)<\/localizedText>/s);
+      const culturalNoteMatch = content.match(/<culturalNote>(.*?)<\/culturalNote>/s);
+      const hashtagsMatch = content.match(/<hashtags>(.*?)<\/hashtags>/s);
+      const callToActionMatch = content.match(/<callToAction>(.*?)<\/callToAction>/s);
+      
+      if (localizedTextMatch) {
+        return {
+          localizedText: localizedTextMatch[1].trim(),
+          culturalNote: culturalNoteMatch ? culturalNoteMatch[1].trim() : "AI generated content",
+          hashtags: hashtagsMatch ? hashtagsMatch[1].trim().split(/\s+/).filter(tag => tag.startsWith('#')) : [],
+          callToAction: callToActionMatch ? callToActionMatch[1].trim() : ""
+        };
+      }
+      
+      // Fallback to raw content
       return {
         localizedText: content,
         culturalNote: "AI generated content",
