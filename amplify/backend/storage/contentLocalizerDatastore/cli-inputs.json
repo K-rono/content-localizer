@@ -1,0 +1,14 @@
+{
+  "resourceName": "contentLocalizerDatastore",
+  "tableName": "contentLocalizerDatastore",
+  "partitionKey": {
+    "fieldName": "PK",
+    "fieldType": "string"
+  },
+  "sortKey": {
+    "fieldName": "SK",
+    "fieldType": "string"
+  },
+  "gsi": [],
+  "triggerFunctions": []
+}

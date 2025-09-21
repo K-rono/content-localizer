@@ -9,14 +9,33 @@
       "UnauthRoleName": "amplify-contentlocalizer-dev-fa55f-unauthRole",
       "StackName": "amplify-contentlocalizer-dev-fa55f",
       "StackId": "arn:aws:cloudformation:ap-southeast-1:065727386877:stack/amplify-contentlocalizer-dev-fa55f/3eb58ae0-95f0-11f0-a570-029e488b6fb5",
-      "AmplifyAppId": "d287qm1udibrte"
+      "AmplifyAppId": "d287qm1udibrte",
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-contentlocalizer-dev-fa55f-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
     },
     "categories": {
       "auth": {
         "contentlocalizer2f1cf384": {}
       },
       "function": {
-        "contentLocalizerFunction": {}
+        "uploadHandler": {
+          "deploymentBucketName": "amplify-contentlocalizer-dev-fa55f-deployment",
+          "s3Key": "amplify-builds/uploadHandler-354a6962583243666369-build.zip"
+        },
+        "jobProcessor": {
+          "deploymentBucketName": "amplify-contentlocalizer-dev-fa55f-deployment",
+          "s3Key": "amplify-builds/jobProcessor-4b323034613644454a6b-build.zip"
+        },
+        "resultsFetcher": {
+          "deploymentBucketName": "amplify-contentlocalizer-dev-fa55f-deployment",
+          "s3Key": "amplify-builds/resultsFetcher-4a59626d6a44366b6866-build.zip"
+        }
+      },
+      "storage": {
+        "contentLocalizerDatastore": {},
+        "contentLocalizerStorage": {}
+      },
+      "api": {
+        "contentLocalizerEndpoints": {}
       }
     }
   }

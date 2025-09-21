@@ -1,6 +1,6 @@
 {
   "api": {
-    "contentLocalizerApi": {
+    "contentLocalizerEndpoints": {
       "dependsOn": [
         {
           "attributes": [
@@ -8,7 +8,23 @@
             "Arn"
           ],
           "category": "function",
-          "resourceName": "contentLocalizerFunction"
+          "resourceName": "uploadHandler"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "resultsFetcher"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "jobProcessor"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -44,13 +60,131 @@
     }
   },
   "function": {
-    "contentLocalizerFunction": {
+    "jobProcessor": {
       "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "contentLocalizerDatastore"
+        },
+        {
+          "attributes": [
+            "BucketName"
+          ],
+          "category": "storage",
+          "resourceName": "contentLocalizerStorage"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "resultsFetcher": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "contentLocalizerDatastore"
+        },
+        {
+          "attributes": [
+            "BucketName"
+          ],
+          "category": "storage",
+          "resourceName": "contentLocalizerStorage"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "uploadHandler": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "contentLocalizerDatastore"
+        },
+        {
+          "attributes": [
+            "BucketName"
+          ],
+          "category": "storage",
+          "resourceName": "contentLocalizerStorage"
+        }
+      ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     }
   },
+  "parameters": {
+    "AMPLIFY_function_jobProcessor_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jobProcessor"
+        }
+      ]
+    },
+    "AMPLIFY_function_jobProcessor_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jobProcessor"
+        }
+      ]
+    },
+    "AMPLIFY_function_resultsFetcher_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "resultsFetcher"
+        }
+      ]
+    },
+    "AMPLIFY_function_resultsFetcher_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "resultsFetcher"
+        }
+      ]
+    },
+    "AMPLIFY_function_uploadHandler_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "uploadHandler"
+        }
+      ]
+    },
+    "AMPLIFY_function_uploadHandler_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "uploadHandler"
+        }
+      ]
+    }
+  },
   "storage": {
+    "contentLocalizerDatastore": {
+      "providerPlugin": "awscloudformation",
+      "service": "DynamoDB"
+    },
     "contentLocalizerStorage": {
       "dependsOn": [],
       "providerPlugin": "awscloudformation",

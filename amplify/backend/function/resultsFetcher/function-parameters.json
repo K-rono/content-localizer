@@ -1,0 +1,19 @@
+{
+  "lambdaLayers": [],
+  "permissions": {
+    "storage": {
+      "contentLocalizerDatastore": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "contentLocalizerStorage": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  }
+}

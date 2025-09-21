@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "paths": {
+    "/upload": {
+      "name": "/upload",
+      "lambdaFunction": "uploadHandler",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/results/{jobId}": {
+      "name": "/results/{jobId}",
+      "lambdaFunction": "resultsFetcher",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/process/{jobId}": {
+      "name": "/process/{jobId}",
+      "lambdaFunction": "jobProcessor",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/jobs": {
+      "name": "/jobs",
+      "lambdaFunction": "resultsFetcher",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}
