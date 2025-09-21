@@ -6,7 +6,7 @@
 	STORAGE_CONTENTLOCALIZERDATASTORE_STREAMARN
 	STORAGE_CONTENTLOCALIZERSTORAGE_BUCKETNAME
 Amplify Params - DO NOT EDIT */const { DynamoDBClient } = require('@aws-sdk/client-dynamodb');
-const { DynamoDBDocumentClient, PutCommand } = require('@aws-sdk/lib-dynamodb');
+const { DynamoDBDocumentClient, PutCommand, UpdateCommand } = require('@aws-sdk/lib-dynamodb');
 const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
 const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware');

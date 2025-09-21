@@ -19,7 +19,7 @@
       "function": {
         "uploadHandler": {
           "deploymentBucketName": "amplify-contentlocalizer-dev-fa55f-deployment",
-          "s3Key": "amplify-builds/uploadHandler-626b673667437a794e78-build.zip"
+          "s3Key": "amplify-builds/uploadHandler-4d694c6b72554f675670-build.zip"
         },
         "jobProcessor": {
           "deploymentBucketName": "amplify-contentlocalizer-dev-fa55f-deployment",
