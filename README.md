@@ -1,6 +1,8 @@
 # Smart AI Content Localizer
 
 A React + AWS Amplify application for translating and localizing content using AI-powered tools.
+Deployed with Amplify
+Link : https://main.d287qm1udibrte.amplifyapp.com/
 
 ## Features
 
